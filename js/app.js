@@ -1,3 +1,25 @@
+
+// Get document sections and navbar UL
+const pageSections = document.querySelectorAll('section'); 
+const navList = document.querySelector('#navbar__list');
+
+// Create document fragment 
+const docFragment = document.createDocumentFragment();
+
+// Create LIs, anchor links, and add to fragment
+for (section of pageSections) {
+    const newListItem = document.createElement('li');
+    const newLink = document.createElement('a');
+    newLink.textContent = section.getAttribute('data-nav');
+    const linkAnchor = "#" + section.getAttribute('id');
+    newLink.setAttribute('href', linkAnchor);
+    newListItem.appendChild(newLink);
+    docFragment.appendChild(newListItem);
+}
+
+// Put the fragment into the DOM inside the list 
+navList.appendChild(docFragment);
+
 /**
  * 
  * Manipulating the DOM exercise.
