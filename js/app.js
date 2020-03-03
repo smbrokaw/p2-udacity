@@ -1,13 +1,91 @@
-// Get document sections and navbar UL
+/**
+ * 
+ * Manipulating the DOM exercise.
+ * Exercise programmatically builds navigation,
+ * scrolls to anchors from navigation,
+ * and highlights section in viewport upon scrolling.
+ * 
+ * Dependencies: None
+ * 
+ * JS Version: ES2015/ES6
+ * 
+ * JS Standard: ESlint
+ * 
+*/
+
+/**
+ * Define Global Variables
+ * 
+*/
+
+// Get document sections and assign to global variables
+const mainTitle = document.querySelector('#main-title');
 const pageSections = document.querySelectorAll('section'); 
 const navList = document.querySelector('#navbar__list');
 const buttonBar = document.querySelector('.sticky-bar');
-const mainTitle = document.querySelector('#main-title');
 
-// Create document fragment 
+// Create global document fragment 
 const docFragment = document.createDocumentFragment();
 
+/**
+ * End Global Variables
+ * Start Helper Functions
+ * 
+*/
+
+// Event listener function. When nav bar item is clicked, 
+// the appropriate section scrolls into view. 
+function clickNav(event) {
+    const section = event.target.getAttribute('data-section');
+    const sectionElement = document.getElementById(section);
+    event.preventDefault();
+    sectionElement.scrollIntoView({behavior: 'smooth'});
+}
+
+// Event listener function. When "Scroll to Top" button
+// is clicked, page scrolls to top.
+function goToTop(event) {
+    event.preventDefault();
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+
+
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ * 
+*/
+
+// build the nav
+
+
+// Add class 'active' to section when near top of viewport
+
+
+// Scroll to anchor ID using scrollTO event
+
+
+/**
+ * End Main Functions
+ * Begin Events
+ * 
+*/
+
+// Build menu 
+
+// Scroll to section on link click
+
+// Set sections as active
+
 // Create LIs and anchor links. Add to fragment
+
+//my stuff
+
+
 for (section of pageSections) {
     const newListItem = document.createElement('li');
     const newLink = document.createElement('a');
@@ -36,18 +114,6 @@ function highlightTab(turnOn, tabId){
 
 // Put the fragment into the DOM inside the list 
 navList.appendChild(docFragment);
-
-// // hide bar
-// function hideBar(bar) {
-//     console.log('hide');
-//     bar.setAttribute('display', 'none');
-// }
-
-// //show bar
-// function showBar(bar){
-//     console.log('show');
-//     bar.setAttribute('display', 'block');
-// }
 
 
 // call back for observer of main area
@@ -100,96 +166,9 @@ for (section of pageSections) {
     intObserver.observe(section);
 }
 
-// Nav event listener callback
-function clickNav(event) {
-    const section = event.target.getAttribute('data-section');
-    const sectionElement = document.getElementById(section);
-    event.preventDefault();
-    sectionElement.scrollIntoView({behavior: "smooth"});
-    // console.log(sectionElement.getClientRects());
-    // const location = sectionElement.getClientRects()[0].y;
-    // window.scrollTo({
-    //     top: location,
-    //     left: 0, 
-    //     behavior: 'smooth'
-    // });
-    // console.log(location);
-}
-
-// button event listener callback - scroll to top of page
-function goToTop(event) {
-    event.preventDefault();
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-    });
-}
-
 // Create an event listener for nav links
 navList.addEventListener('click', clickNav);
 
 // Create an event listener for the "back to top" button
 const topButton = document.getElementById('return-to-top');
 topButton.addEventListener('click', goToTop);
-
-// Scroll to section
-// Get x/y of each section header
-// set an event on nav links
-// when event happens, scroll to anchor ID instead of using href
-
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
- * Define Global Variables
- * 
-*/
-
-
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
-
-
-// Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
