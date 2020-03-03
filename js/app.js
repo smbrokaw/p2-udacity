@@ -15,8 +15,22 @@ for (section of pageSections) {
     newLink.setAttribute('href', linkAnchor);
     newLink.setAttribute('data-section', section.getAttribute('id'));
     newLink.setAttribute('class', 'menu__link');
+    newLink.setAttribute('id', section.getAttribute('id') + "_tab");
     newListItem.appendChild(newLink);
     docFragment.appendChild(newListItem);
+}
+
+// tab turns color if its section is in view
+function highlightTab(turnOn, tabId){
+    console.log(turnOn, 'function called');
+    const tab = document.getElementById(tabId + '_tab');
+    if (turnOn) {
+        console.log("turn on the tab");
+        tab.classList.add('active-tab');
+    } else {
+        console.log("turn off the tab");
+        tab.classList.remove('active-tab');
+    }
 }
 
 // Put the fragment into the DOM inside the list 
@@ -30,14 +44,18 @@ function highlightSection (entries, observer) {
     const enteringView = entries[0].isIntersecting;
     if (enteringView) {
         currentSection.classList.add('current-section');
+        // change nav link to active
+        highlightTab(true, currentSection.getAttribute('id'));
     } else {
         currentSection.classList.remove('current-section');
+        // change nav link to inactive
+        highlightTab(false, currentSection.getAttribute('id'));
     }
 }
 
 // Intersection Observer Options 
 const options = {
-    threshold: 0.5
+    threshold: 0.9
 }
 
 // Create an intersection observer object
