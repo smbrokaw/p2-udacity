@@ -60,17 +60,19 @@ function goToTop(event) {
  * 
 */
 
-// build the nav
-function buildMenu() {
-    for (section of pageSections) {
-        const newListItem = document.createElement('li');
+// Build the nav. Create new elements, populate their attributes,
+// and append them to the document fragment. 
+function buildMenu(sections) {
+    for (section of sections) {
+        const newListItem = document.createElement('li');  
         const newLink = document.createElement('a');
+        const sectionID = section.getAttribute('id');
+        const linkAnchor = "#" + sectionID;
         newLink.textContent = section.getAttribute('data-nav');
-        const linkAnchor = "#" + section.getAttribute('id');
         newLink.setAttribute('href', linkAnchor);
-        newLink.setAttribute('data-section', section.getAttribute('id'));
+        newLink.setAttribute('data-section', sectionID);
         newLink.setAttribute('class', 'menu__link');
-        newLink.setAttribute('id', section.getAttribute('id') + "_tab");
+        newLink.setAttribute('id', sectionID + "_tab");
         newListItem.appendChild(newLink);
         docFragment.appendChild(newListItem);
     }
@@ -89,7 +91,7 @@ function buildMenu() {
 */
 
 // Build menu 
-buildMenu();
+buildMenu(pageSections);
 
 // Scroll to section on link click
 
