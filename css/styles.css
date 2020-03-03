@@ -198,6 +198,10 @@ section.current-section {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
+section.current-section h2 {
+    color: yellow;
+}
+
 section.current-section .landing__container::before {
     opacity: 1;
     animation: rotate 4s linear 0s infinite forwards;
