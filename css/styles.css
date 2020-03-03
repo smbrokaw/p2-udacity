@@ -92,6 +92,23 @@ section {
     background: #86cfa6;
 }
 
+/* "Return to top" button bar styles */
+.sticky-bar {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    padding: 1em;
+}
+
+.bar-invisible {
+    display: none;
+}
+
+.bar-visible {
+    display: block;
+}
+
 /* Header Styles */
 .page__header {
     background: #fff;
@@ -99,6 +116,7 @@ section {
     top: 0;
     width: 100%;
     z-index: 5;
+    display: block;
 }
 
 /* Footer Styles */

@@ -1,7 +1,8 @@
 // Get document sections and navbar UL
 const pageSections = document.querySelectorAll('section'); 
 const navList = document.querySelector('#navbar__list');
-
+const buttonBar = document.querySelector('.sticky-bar');
+const mainTitle = document.querySelector('#main-title');
 
 // Create document fragment 
 const docFragment = document.createDocumentFragment();
@@ -36,6 +37,33 @@ function highlightTab(turnOn, tabId){
 // Put the fragment into the DOM inside the list 
 navList.appendChild(docFragment);
 
+// // hide bar
+// function hideBar(bar) {
+//     console.log('hide');
+//     bar.setAttribute('display', 'none');
+// }
+
+// //show bar
+// function showBar(bar){
+//     console.log('show');
+//     bar.setAttribute('display', 'block');
+// }
+
+
+// call back for observer of main area
+function showHideBar(entries, observer) {
+    const isAboveFold = entries[0].isIntersecting;
+    if (isAboveFold) {
+        console.log('is above fold');
+        console.log(buttonBar.classList.remove('bar-visible'));
+        console.log(buttonBar.classList.add('bar-invisible'));        
+    } else {
+        console.log('is beneath fold');
+        console.log(buttonBar.classList.remove('bar-invisible'));
+        console.log(buttonBar.classList.add('bar-visible'));
+    }
+}
+
 // Callback function for highlighting section.
 // Runs whenever a section comes into view
 // Adds current-section class to things entering, removes from things exiting
@@ -58,8 +86,14 @@ const options = {
     threshold: 0.9
 }
 
-// Create an intersection observer object
+// Create an intersection observer object for sections
 const intObserver = new IntersectionObserver(highlightSection, options);
+
+// Create an intersection observer object for bottom buttonbar
+const intObserverButton = new IntersectionObserver(showHideBar, options);
+
+// Target page top with observer
+intObserverButton.observe(mainTitle);
 
 // Target each section with observer
 for (section of pageSections) {
@@ -82,8 +116,22 @@ function clickNav(event) {
     // console.log(location);
 }
 
+// button event listener callback - scroll to top of page
+function goToTop(event) {
+    event.preventDefault();
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+
 // Create an event listener for nav links
 navList.addEventListener('click', clickNav);
+
+// Create an event listener for the "back to top" button
+const topButton = document.getElementById('return-to-top');
+topButton.addEventListener('click', goToTop);
 
 // Scroll to section
 // Get x/y of each section header
