@@ -61,7 +61,20 @@ function goToTop(event) {
 */
 
 // build the nav
-
+function buildMenu() {
+    for (section of pageSections) {
+        const newListItem = document.createElement('li');
+        const newLink = document.createElement('a');
+        newLink.textContent = section.getAttribute('data-nav');
+        const linkAnchor = "#" + section.getAttribute('id');
+        newLink.setAttribute('href', linkAnchor);
+        newLink.setAttribute('data-section', section.getAttribute('id'));
+        newLink.setAttribute('class', 'menu__link');
+        newLink.setAttribute('id', section.getAttribute('id') + "_tab");
+        newListItem.appendChild(newLink);
+        docFragment.appendChild(newListItem);
+    }
+}
 
 // Add class 'active' to section when near top of viewport
 
@@ -76,6 +89,7 @@ function goToTop(event) {
 */
 
 // Build menu 
+buildMenu();
 
 // Scroll to section on link click
 
@@ -86,18 +100,7 @@ function goToTop(event) {
 //my stuff
 
 
-for (section of pageSections) {
-    const newListItem = document.createElement('li');
-    const newLink = document.createElement('a');
-    newLink.textContent = section.getAttribute('data-nav');
-    const linkAnchor = "#" + section.getAttribute('id');
-    newLink.setAttribute('href', linkAnchor);
-    newLink.setAttribute('data-section', section.getAttribute('id'));
-    newLink.setAttribute('class', 'menu__link');
-    newLink.setAttribute('id', section.getAttribute('id') + "_tab");
-    newListItem.appendChild(newLink);
-    docFragment.appendChild(newListItem);
-}
+
 
 // tab turns color if its section is in view
 function highlightTab(turnOn, tabId){
