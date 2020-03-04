@@ -23,13 +23,17 @@ const mainTitle = document.querySelector('#main-title');
 const pageSections = document.querySelectorAll('section'); 
 const navList = document.querySelector('#navbar__list');
 const buttonBar = document.querySelector('.sticky-bar');
+const topButton = document.getElementById('return-to-top');
 
 // Create global document fragment 
 const docFragment = document.createDocumentFragment();
 
+// Set Intersection Observer options 
+const options = {threshold: 0.9};
+
 /**
  * End Global Variables
- * Start Helper Functions
+ * Begin Main Functions
  * 
 */
 
@@ -54,14 +58,9 @@ function goToTop(event) {
 }
 
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// Build the nav. Create new elements, populate their attributes,
-// and append them to the document fragment. 
+// Builds top navbar. Creates elements, populates their
+// attributes, appends them to the document fragment, 
+// and adds the fragment to the DOM.
 function buildMenu(sections) {
     for (section of sections) {
         const newListItem = document.createElement('li');  
@@ -76,12 +75,47 @@ function buildMenu(sections) {
         newListItem.appendChild(newLink);
         docFragment.appendChild(newListItem);
     }
+    navList.appendChild(docFragment);
 }
 
-// Add class 'active' to section when near top of viewport
 
+// Adds tab class 'active-tab' when section is in view
+function highlightTab(turnOn, tabId){
+    const tab = document.getElementById(tabId + '_tab');
+    if (turnOn) {
+        tab.classList.add('active-tab');
+    } else {
+        tab.classList.remove('active-tab');
+    }
+}
 
-// Scroll to anchor ID using scrollTO event
+// Callback function for observer of main area
+// When below the fold, "Scroll to top" button bar visible
+function showHideBar(entries, observer) {
+    const isAboveFold = entries[0].isIntersecting;
+    if (isAboveFold) {
+        buttonBar.classList.remove('bar-visible');
+        buttonBar.classList.add('bar-invisible');        
+    } else {
+        buttonBar.classList.remove('bar-invisible');
+        buttonBar.classList.add('bar-visible');
+    }
+}
+
+// Callback function for observer of sections
+// Runs whenever a section comes into the main view area
+// Highlights that section with yellow header text
+function highlightSection (entries, observer) {
+    const currentSection = entries[0].target;
+    const enteringView = entries[0].isIntersecting;
+    if (enteringView) {
+        currentSection.classList.add('current-section');
+        highlightTab(true, currentSection.getAttribute('id'));
+    } else {
+        currentSection.classList.remove('current-section');
+        highlightTab(false, currentSection.getAttribute('id'));
+    }
+}
 
 
 /**
@@ -93,77 +127,13 @@ function buildMenu(sections) {
 // Build menu 
 buildMenu(pageSections);
 
-// Scroll to section on link click
-
-// Set sections as active
-
-// Create LIs and anchor links. Add to fragment
-
-//my stuff
-
-
-
-
-// tab turns color if its section is in view
-function highlightTab(turnOn, tabId){
-    console.log(turnOn, 'function called');
-    const tab = document.getElementById(tabId + '_tab');
-    if (turnOn) {
-        console.log("turn on the tab");
-        tab.classList.add('active-tab');
-    } else {
-        console.log("turn off the tab");
-        tab.classList.remove('active-tab');
-    }
-}
-
-// Put the fragment into the DOM inside the list 
-navList.appendChild(docFragment);
-
-
-// call back for observer of main area
-function showHideBar(entries, observer) {
-    const isAboveFold = entries[0].isIntersecting;
-    if (isAboveFold) {
-        console.log('is above fold');
-        console.log(buttonBar.classList.remove('bar-visible'));
-        console.log(buttonBar.classList.add('bar-invisible'));        
-    } else {
-        console.log('is beneath fold');
-        console.log(buttonBar.classList.remove('bar-invisible'));
-        console.log(buttonBar.classList.add('bar-visible'));
-    }
-}
-
-// Callback function for highlighting section.
-// Runs whenever a section comes into view
-// Adds current-section class to things entering, removes from things exiting
-function highlightSection (entries, observer) {
-    const currentSection = entries[0].target;
-    const enteringView = entries[0].isIntersecting;
-    if (enteringView) {
-        currentSection.classList.add('current-section');
-        // change nav link to active
-        highlightTab(true, currentSection.getAttribute('id'));
-    } else {
-        currentSection.classList.remove('current-section');
-        // change nav link to inactive
-        highlightTab(false, currentSection.getAttribute('id'));
-    }
-}
-
-// Intersection Observer Options 
-const options = {
-    threshold: 0.9
-}
-
-// Create an intersection observer object for sections
+// Create an intersection observer object for highlighting sections
 const intObserver = new IntersectionObserver(highlightSection, options);
 
-// Create an intersection observer object for bottom buttonbar
+// Create an intersection observer object for hiding buttonbar
 const intObserverButton = new IntersectionObserver(showHideBar, options);
 
-// Target page top with observer
+// Target page top ("above the fold") with observer
 intObserverButton.observe(mainTitle);
 
 // Target each section with observer
@@ -175,5 +145,4 @@ for (section of pageSections) {
 navList.addEventListener('click', clickNav);
 
 // Create an event listener for the "back to top" button
-const topButton = document.getElementById('return-to-top');
 topButton.addEventListener('click', goToTop);
