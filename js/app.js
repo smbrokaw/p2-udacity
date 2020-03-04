@@ -85,6 +85,7 @@ function buildMenu(sections) {
     navList.appendChild(docFragment);
 }
 
+
 /**
  * Adds tab class 'active-tab' when section is in view
  * Removes it when it's not in view
