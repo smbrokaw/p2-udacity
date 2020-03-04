@@ -1,44 +1,44 @@
 /**
- * 
+ *
  * Manipulating the DOM exercise.
  * Exercise programmatically builds navigation,
  * scrolls to anchors from navigation,
  * and highlights section in viewport upon scrolling.
- * 
+ *
  * Dependencies: None
- * 
+ *
  * JS Version: ES2015/ES6
- * 
+ *
  * JS Standard: ESlint
- * 
+ *
 */
 
 /**
  * Define Global Variables
- * 
+ *
 */
 
 // Get document sections and assign to global variables
 const mainTitle = document.querySelector('#main-title');
-const pageSections = document.querySelectorAll('section'); 
+const pageSections = document.querySelectorAll('section');
 const navList = document.querySelector('#navbar__list');
 const buttonBar = document.querySelector('.sticky-bar');
 const topButton = document.getElementById('return-to-top');
 
-// Create global document fragment 
+// Create global document fragment
 const docFragment = document.createDocumentFragment();
 
-// Set Intersection Observer options 
+// Set Intersection Observer options
 const options = {threshold: 0.9};
 
 /**
  * End Global Variables
  * Begin Main Functions
- * 
+ *
 */
 
-// Event listener function. When nav bar item is clicked, 
-// the appropriate section scrolls into view. 
+// Event listener function. When nav bar item is clicked,
+// the appropriate section scrolls into view.
 function clickNav(event) {
     const section = event.target.getAttribute('data-section');
     const sectionElement = document.getElementById(section);
@@ -59,11 +59,11 @@ function goToTop(event) {
 
 
 // Builds top navbar. Creates elements, populates their
-// attributes, appends them to the document fragment, 
+// attributes, appends them to the document fragment,
 // and adds the fragment to the DOM.
 function buildMenu(sections) {
     for (section of sections) {
-        const newListItem = document.createElement('li');  
+        const newListItem = document.createElement('li');
         const newLink = document.createElement('a');
         const sectionID = section.getAttribute('id');
         const linkAnchor = "#" + sectionID;
@@ -95,7 +95,7 @@ function showHideBar(entries, observer) {
     const isAboveFold = entries[0].isIntersecting;
     if (isAboveFold) {
         buttonBar.classList.remove('bar-visible');
-        buttonBar.classList.add('bar-invisible');        
+        buttonBar.classList.add('bar-invisible');
     } else {
         buttonBar.classList.remove('bar-invisible');
         buttonBar.classList.add('bar-visible');
@@ -121,10 +121,10 @@ function highlightSection (entries, observer) {
 /**
  * End Main Functions
  * Begin Events
- * 
+ *
 */
 
-// Build menu 
+// Build menu
 buildMenu(pageSections);
 
 // Create an intersection observer object for highlighting sections
