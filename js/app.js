@@ -37,8 +37,10 @@ const options = {threshold: 0.9};
  *
 */
 
-// Event listener function. When nav bar item is clicked,
-// the appropriate section scrolls into view.
+/**
+ * Event listener function. When nav bar item is clicked,
+ * the appropriate section scrolls into view.
+*/
 function clickNav(event) {
     const section = event.target.getAttribute('data-section');
     const sectionElement = document.getElementById(section);
@@ -46,8 +48,11 @@ function clickNav(event) {
     sectionElement.scrollIntoView({behavior: 'smooth'});
 }
 
-// Event listener function. When "Scroll to Top" button
-// is clicked, page scrolls to top.
+
+/**
+ * Event listener function. When "Scroll to Top" button
+ * is clicked, page scrolls to top.
+*/
 function goToTop(event) {
     event.preventDefault();
     window.scrollTo({
@@ -58,9 +63,11 @@ function goToTop(event) {
 }
 
 
-// Builds top navbar. Creates elements, populates their
-// attributes, appends them to the document fragment,
-// and adds the fragment to the DOM.
+/**
+ * Builds top navbar. Creates elements, populates their
+ * attributes, appends them to the document fragment,
+ * and adds the fragment to the DOM.
+*/
 function buildMenu(sections) {
     for (section of sections) {
         const newListItem = document.createElement('li');
@@ -78,8 +85,10 @@ function buildMenu(sections) {
     navList.appendChild(docFragment);
 }
 
-
-// Adds tab class 'active-tab' when section is in view
+/**
+ * Adds tab class 'active-tab' when section is in view
+ * Removes it when it's not in view
+*/
 function highlightTab(turnOn, tabId){
     const tab = document.getElementById(tabId + '_tab');
     if (turnOn) {
@@ -89,8 +98,12 @@ function highlightTab(turnOn, tabId){
     }
 }
 
-// Callback function for observer of main area
-// When below the fold, "Scroll to top" button bar visible
+
+/**
+ * Callback function for observer of main area
+ * When below the fold, "Scroll to top" button bar visible
+ * When above the fold, it's not visible
+*/
 function showHideBar(entries, observer) {
     const isAboveFold = entries[0].isIntersecting;
     if (isAboveFold) {
@@ -102,9 +115,12 @@ function showHideBar(entries, observer) {
     }
 }
 
-// Callback function for observer of sections
-// Runs whenever a section comes into the main view area
-// Highlights that section with yellow header text
+
+/**
+ * Callback function for observer of sections
+ * Runs whenever a section comes into the main view area
+ * Highlights that section with yellow header text
+*/
 function highlightSection (entries, observer) {
     const currentSection = entries[0].target;
     const enteringView = entries[0].isIntersecting;
